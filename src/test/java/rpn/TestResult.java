@@ -8,8 +8,8 @@ import java.util.function.Function;
 import static org.assertj.core.api.Assertions.assertThat;
 
 public class TestResult implements OnEvent<ResultEvent> {
-    private int expectedResult;
-    public TestResult(int expectedResult)
+    private double expectedResult;
+    public TestResult(double expectedResult)
     {
         this.expectedResult = expectedResult;
     }

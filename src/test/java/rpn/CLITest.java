@@ -55,7 +55,7 @@ public class CLITest {
     @Test
     public void should_evaluate_simple_division() {
         EventDispatcher dispatcher = new EventDispatcher();
-        dispatcher.registerChannel(new TestResult(-5));
+        dispatcher.registerChannel(new TestResult(3.4));
         evaluate(dispatcher, "17 5 /");
     }
 
