@@ -1,6 +1,7 @@
 package rpn.operation;
 
 import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Created by yohanfairfort on 15/04/2018.
@@ -8,7 +9,7 @@ import java.util.ArrayList;
 public abstract class TwoMemberOperation implements IOperation{
     abstract double Calculate(double left, double right);
 
-    public void Operate(ArrayList<String> calculMembers, int i)
+    public void Operate(List<String> calculMembers, int i)
     {
         double leftMember = Double.parseDouble(calculMembers.get(i - 2));
         double rightMember = Double.parseDouble(calculMembers.get(i - 1));

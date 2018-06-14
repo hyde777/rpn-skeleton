@@ -1,37 +1,36 @@
 package rpn;
 
-import rpn.operation.IOperation;
+import rpn.events.*;
 
-import java.util.ArrayList;
-import java.util.Map;
+import java.util.List;
 
 /**
  * Created by yohanfairfort on 21/03/2018.
  */
-public class PoloneseCalculStyle implements ICalculStyle
+public class PoloneseCalculStyle implements OnEvent<SendTokenEvent>
 {
-    private Map<String, IOperation> symbols;
-    private ITokeniser tokeniser;
+    EventDispatcher dispatcher;
 
-    public PoloneseCalculStyle(Map<String, IOperation> symbols, ITokeniser tokeniser)
+    public PoloneseCalculStyle(EventDispatcher dispatcher)
     {
-        this.symbols = symbols;
-        this.tokeniser = tokeniser;
+        this.dispatcher = dispatcher;
     }
 
-    public double Calculate(String rawCalcul)
+    private void Calculate(List<String> calculMembers)
     {
-        ArrayList<String> calculMembers = tokeniser.getTokens(rawCalcul);
+        if(calculMembers.size() > 1)
+            dispatcher.dispatch(new OperationEvent(calculMembers));
+        else
+            dispatcher.dispatch(new ResultEvent(calculMembers.get(0)));
+    }
 
-        for (int i = 0; calculMembers.size() != 1; i++)
-        {
-            if(!symbols.keySet().contains(calculMembers.get(i)))
-                continue;
+    @Override
+    public void onEvent(SendTokenEvent sendTokenEvent) {
+        Calculate(sendTokenEvent.getTokens());
+    }
 
-            symbols.get(calculMembers.get(i)).Operate(calculMembers, i);
-            i = 0;
-        }
-
-        return Double.parseDouble(calculMembers.get(0));
+    @Override
+    public Class getEventType() {
+        return SendTokenEvent.class;
     }
 }
